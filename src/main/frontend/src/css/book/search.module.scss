@@ -1,0 +1,61 @@
+.wrap{
+    max-width: 1100px;
+    margin: 0 auto;
+   .searchTitle{
+    display: block;
+   }
+   .red{
+    display: inline;
+    color: red;
+   }
+   .imgBox{
+    max-width: 128px;
+    max-height: 188px;
+    overflow: hidden;
+    margin-right: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    img{
+        width: 100%;
+    }
+   }
+    ul{
+        margin: 0;
+        margin-top: 30px;
+        padding: 0;
+        list-style: none;
+    }
+    li{
+        display: flex;
+        margin-bottom: 30px;
+        h5, h6{
+            margin: 0;
+            padding: 0;
+        }
+        h5{
+            font-size: larger;
+            cursor: pointer;
+        }
+        h6{
+            font-size:0.9em;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        dl{
+            margin: 0;
+            margin-top: 5px;
+            padding: 0;
+
+        }
+        dt{
+            display: inline;
+            font-size: smaller;
+            color: gray;
+        }
+        dd{
+            display: inline;
+            font-size: smaller;
+
+        }
+    }
+}

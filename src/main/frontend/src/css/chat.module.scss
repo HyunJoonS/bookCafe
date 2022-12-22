@@ -1,0 +1,113 @@
+.wrap{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 500px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    background-color: #fafafa;
+    border-radius:10px;
+    position: fixed;
+    padding: 2px;
+
+    color: black;
+    font-size: small;
+    .titlebar{
+        position: relative;
+        border-bottom: 1px solid #ccc;
+        font-size: 1.0em;
+        .xbtn{
+            position: absolute;
+            right: 0;
+            top: 2px;
+            cursor: pointer;
+        }
+        
+    }
+    .body{
+        margin-top: 3px;
+        padding-bottom: 3px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 100%;
+        font-size: 14px;
+        .writer{
+            font-size: 0.9em;
+            color: #aaa;
+            margin-right: 3px;
+        }
+        span{
+            word-break:break-all
+        }
+        .notice{
+            color: #aaa;
+            font-size: 0.1em;
+            display: block;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .text{
+            color:#555;
+        }
+        .line {
+            display:flex;
+            flex-basis:100%;
+            color: #aaa;
+            font-size: 0.1em;
+            align-items:center;
+            color:rgba(0,0,0,0.35);
+            margin:8px 0px;
+        }
+        .line::before{
+            content:"";
+            flex-grow:1;
+            margin:0px 8px;
+            background:rgba(0,0,0,0.35);
+            height:1px;
+            font-size:0px;
+            line-height: 0px;
+        }
+        .line::after {
+            content:"";
+            flex-grow:1;
+            margin:0px 8px;
+            background:rgba(0,0,0,0.35);
+            height:1px;
+            font-size:0px;
+            line-height: 0px;
+        }
+        
+
+    }
+    .inputbox{
+        position: relative;
+        margin: 0 auto;
+        width: 97%;
+        height: 30px;     
+        overflow: hidden;
+        input{
+            position: absolute;
+            top: 1px;
+            font-size: 0.9em;
+            width: 80%;
+            outline: none;
+            border: 1px solid #ccc;
+            margin:0;
+            padding: 2px;
+            background-color: white;
+
+        }
+        button{
+            position: absolute;
+            font-size: 0.8em;
+            right: 0;
+            height: 22px;
+            border: 1px solid rgba(0,0,0,0.21);
+            border-bottom: 2px solid rgba(0,0,0,0.21);
+            border-radius: 5px;
+            text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+            
+        }
+    }
+}

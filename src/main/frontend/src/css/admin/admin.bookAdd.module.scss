@@ -1,0 +1,38 @@
+.tbdiv{
+    position: relative;
+    width: 100%;
+    input, textarea{
+        outline: none;
+        border: none;
+        width: 90%;
+    }
+    textarea{
+        height: 150px;
+    }
+
+    table, td, th, tr{
+        border : 1px solid gray;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    table{
+        width: 500px;
+    }
+    .box{
+        position: absolute;
+    }
+}
+.imgdiv{
+    margin-top: 20px;
+    max-width: 500px;
+    width: 500px;
+    text-align: center;
+    img{    
+        margin-top: 20px;
+        width: 200px;
+    }
+}
+.btns{
+    margin-top: 10px;
+}
+

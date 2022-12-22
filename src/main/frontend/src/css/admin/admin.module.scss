@@ -1,0 +1,82 @@
+.wrap{
+    display: flex;
+    li:hover{
+        cursor: pointer;
+    }
+}
+.main{
+    display: flex;
+    padding: 30px;
+    padding-left: 230px;
+    width: 100%;
+    min-width: 550px;
+    button {
+        position: relative;
+        border: none;
+        display: inline-block;
+        padding: 10px 30px;
+        border-radius: 15px;
+        font-family: "paybooc-Light", sans-serif;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.25s;
+        background-color: #77af9c;
+        color: #d7fff1;
+        margin-left: 5px;
+    }
+    button:hover {
+        filter: brightness(90%); 
+        cursor: pointer;
+    }
+
+    
+    button:active {
+        transform: scale(1.5);
+    }
+    .btns{
+        margin-top: 10px;
+    }
+    .inputBox{
+        width: 500px;
+        height: 32px;
+        font-size: 15px;
+        border: 0;
+        border-radius: 15px;
+        outline: none;
+        padding-left: 10px;
+        background-color: rgb(233, 233, 233);
+    }
+    .textareaBox{
+        width: 500px;
+        height: 150px;
+        font-size: 15px;
+        border: 0;
+        border-radius: 15px;
+        outline: none;
+        padding-left: 10px;
+        background-color: rgb(233, 233, 233);
+        resize: none;
+    
+    }
+    
+}
+.tbdiv{
+    margin-left: 30px;
+    margin-right: 30px;
+    display: inline;
+}
+.imgdiv{
+    display: inline;
+    img{
+        max-width: 150px;
+    }
+    
+}
+
+
+@media (max-width: 500px) {
+    .main {
+      padding-left: 140px;
+    }
+  }

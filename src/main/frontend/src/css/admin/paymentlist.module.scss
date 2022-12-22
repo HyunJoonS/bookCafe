@@ -1,0 +1,68 @@
+.wrap{
+    width: 100%;
+    .tb{
+        width: 100%;
+        text-align: center;
+        tr,td{
+            border-bottom: 1px solid #eee;
+            padding-top: 5px;
+            padding-top: 5px;
+        }
+    }
+    .spanbtns{
+        span{
+            padding: 1px 5px 1px 5px;
+            border-radius: 10px;
+            border: 1px solid gray;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .selected{
+            background-color: gray;
+            color: white;
+        }
+        margin-bottom: 20px;
+    }
+    a{
+        cursor: pointer;
+        padding: 1px 5px 1px 5px;
+        border-bottom: 1px solid gray;
+        color: gray;
+    }
+}
+
+
+.cardwrap{
+    width: 500px;
+    border: 1px solid #eee;
+    font-size: small;
+    position: relative;
+    padding-left: 5px;
+
+    table{
+        width: 100%;    
+        margin-top:5px;
+        margin-bottom: 5px;    
+    }
+    h5{
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        padding-bottom: 5px;
+        border-bottom: #eee 1px solid;
+    
+    }    
+    .time{
+        margin-left: 50px;
+    }
+    .totalPrice{
+        right: 0;
+        font-size: large;
+        font-weight: 600;
+        color:red;
+        .fs{
+            display: inline;
+            color: black;
+        }
+    }
+}

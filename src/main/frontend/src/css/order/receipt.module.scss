@@ -1,0 +1,57 @@
+.wrap{
+    font-weight: bold;
+    text-align: center;
+  button {
+        position: relative;
+        border: none;
+        display: inline-block;
+        padding: 10px 30px;
+        border-radius: 15px;
+        font-family: "paybooc-Light", sans-serif;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.25s;
+        background-color: #77af9c;
+        color: #d7fff1;
+        margin-left: 5px;
+        margin-bottom: 10px;
+    }
+    button:hover {
+        filter: brightness(90%); 
+        cursor: pointer;
+    }
+
+    
+    button:active {
+        transform: scale(1.5);
+    }
+}
+.title{
+    font-size: 1.5em;
+    span{
+        display: block;
+    }
+    border-bottom: 1px solid gray;
+    padding-bottom: 30px;
+}
+.bodyText{
+    font-size: 1.2em;
+    border-bottom: 1px solid gray;
+    padding-bottom: 100px;
+    h4{
+        color: red;
+        font-size: 3em;
+    }    
+}
+.bottomBox{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    span{
+        font-size: 1.1em;
+    }
+}
+.emphasis{
+    background-color: gray;
+    color: white;
+}

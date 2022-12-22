@@ -1,0 +1,48 @@
+
+[
+    {
+    "id" : 0,
+    "name" : "아메리카노",
+    "price": "3000",
+    "imgUrl": "/img/menu1.jpg",
+    "category": "Drink"
+    
+    },
+    {
+        "id" : 1,
+        "name" : "카페라떼",
+        "price": "3500",
+        "imgUrl": "/img/menu2.jpg",
+        "category": "Drink"
+    },
+    {
+        "id" : 2,
+        "name" : "카페모카",
+        "price": "4500",
+        "imgUrl": "/img/menu3.jpg",
+        "category": "Drink"
+    }
+    ,
+    {
+        "id" : 3,
+        "name" : "딸기스무디",
+        "price": "4500",
+        "imgUrl": "/img/menu4.jpg",
+        "category": "Drink"
+    },
+    {
+        "id" : 4,
+        "name" : "오렌지주스",
+        "price": "3500",
+        "imgUrl": "/img/menu5.jpg",
+        "category": "Drink"
+    },
+    {
+        "id" : 5,
+        "name" : "기타",
+        "price": "3500",
+        "imgUrl": "/logo192.png",
+        "category": "Food"
+    }
+
+]

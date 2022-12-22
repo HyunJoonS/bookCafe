@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<script>
+
+  function aa(){
+     const openerWindow = window.opener;
+     openerWindow.alertff('aa');
+  }
+  function bb(){
+    window.open("/cancel")
+  }
+  function alertff(){
+    alert('알림창')
+  }
+   function go(){
+    location.href = "/openerdetour";
+  }
+</script>
+<button onclick="aa()">부모창알림</button>
+<button onclick="bb()">자식창열기</button>
+<button onclick="alertff()">알림</button>
+<button onclick="go()">이동</button>
+
+
+</body>
+</html>

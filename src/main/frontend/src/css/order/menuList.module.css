@@ -1,0 +1,49 @@
+.wrap{
+    padding-left: 16vh;
+    padding-top: 2vh;
+}
+h4{
+    font-weight: bold;
+    margin-bottom: 3vh;
+}
+h5{
+    font-weight: 600;
+    font-size:medium;
+    margin-top: 2vh;
+    margin-bottom: 0px;
+}
+p{
+    margin-bottom: 5vh;
+}
+.wrap ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-left: 1vh;
+    display: flex;
+    overflow: hidden;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+}
+.wrap ul li{
+    margin-left: 15px;
+    margin-right: 15px;
+    transition: all 0.1s linear;
+}
+.wrap ul li img{
+    min-width: 150px;
+    min-height: 150px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+.wrap ul li:hover{
+    cursor: pointer;
+    font-weight: bold;
+    transform:  scale(1.1);
+}
+
+.wrap ul li:hover > h5{
+    font-weight: bold;
+}

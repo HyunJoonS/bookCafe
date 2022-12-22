@@ -1,0 +1,36 @@
+.wrap{
+    width: 100%;
+    table{
+        font-size: smaller;
+        margin-top: 10px;
+        width: 100%;
+    }
+    table,th,td{
+        border: 1px solid gray;
+        border-collapse : collapse;
+        text-align: center;
+    }
+    th{
+        font-size: small;
+        background-color: beige;
+    }
+    tbody tr:hover{
+        background-color: #eee;
+        cursor: pointer;
+    }
+    .searchBox{
+        margin-bottom:20px;
+        label{
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        input{
+            width: 200px;
+        }
+    }
+    td{
+        img{
+            width: 100px;
+        }
+    }
+}

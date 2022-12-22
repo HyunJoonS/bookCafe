@@ -1,0 +1,58 @@
+
+.gnb{
+    position: fixed;
+    top:0;
+    height: 75px;
+    width: 100%;
+    min-width: 400px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    z-index: 100;
+    .wrap{
+        display: block;
+        position: relative;
+        color: white;
+        width: 100%;
+        padding-right: 10px;
+        padding-left: 10px;
+
+        .logo{
+            cursor: pointer;
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .link{
+            margin-left: 30px;
+            cursor: pointer;
+        }
+        .chat{
+            position: absolute;
+            top:10px;
+            right: 20px;
+            .chatBtn{
+                font-size: 2em;
+                cursor: pointer;
+            }
+    
+        }
+    }
+}
+.footer{
+    font-size: small;
+    padding-top: 40px;    
+    padding-bottom: 40px;    
+    color: #ccc;
+    width: 100%;
+    background-color: rgb(35, 35, 35);
+    span{
+        padding-left :20px;
+        display: block;
+    }
+}
+@media (max-width: 500px) {
+    .gnb {
+      font-size: small;
+    }
+  }

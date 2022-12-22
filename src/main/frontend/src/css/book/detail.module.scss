@@ -1,0 +1,80 @@
+.wrap{
+    max-width: 1100px;
+    height: 100vh;
+    margin: 0 auto;
+    hr{
+        background:#eee;
+        height:1px;
+        border:0;
+    }
+    .topWrap{
+        display: flex;
+
+        .imageBox{
+            width: 50%;
+            padding: 10px;
+            background-color: #eee;
+            text-align: center;
+            img{
+
+                max-width: 300px;
+                width: 100%;
+            }
+        }
+        ul{
+            list-style: none;
+            margin-left: 0;
+            padding-left: 0;
+        }
+        .infoBox{
+            width: 50%;
+            margin-left: 20px;
+            h4{
+                display: block;                
+            }
+            dt{
+                font-weight: bold;
+                display: inline-block;
+                margin-right: 10px;
+            }
+            dl{
+                display: inline;
+                
+            }
+        }
+
+    }
+    .maps{
+        img{
+            width: 50vh;
+        }
+        margin-bottom: 30px;
+    }
+    .goback{
+        font-size: larger;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        a{
+            cursor: pointer;
+            position: relative;
+            border: none;
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 15px;
+            font-family: "paybooc-Light", sans-serif;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.25s;
+            background-color: #fff;
+            color: black;
+            margin-left: 5px;
+            width: 100%;
+            text-align: center;
+        }
+        a:hover {
+            filter: brightness(90%); 
+            cursor: pointer;
+        }
+    }
+}

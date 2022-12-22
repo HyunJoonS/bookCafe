@@ -1,0 +1,30 @@
+.wrap{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    ul{
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        padding-bottom: 10px;
+    }
+    li{
+        cursor: pointer;
+        height: 100%;
+        padding-left: 10px;
+     
+    }
+    a{
+        padding-bottom: 10px;
+    }
+    .on{
+        a{
+            color: #00c85e;
+            font-weight: bold;
+            border-bottom: 2px solid #00d564;
+        }
+    }
+    
+}

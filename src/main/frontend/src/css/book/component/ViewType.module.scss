@@ -1,0 +1,29 @@
+.wrap{
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    ul{
+        display: flex;
+        justify-content:flex-end;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        padding-bottom: 10px;
+    }
+    li{
+        height: 100%;
+        padding-left: 10px;
+     
+    }
+    a{
+        padding-bottom: 10px;        
+        color: darkGray;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .on{
+        a{
+            color: #00c85e;
+            font-weight: bold;
+        }
+    }    
+}

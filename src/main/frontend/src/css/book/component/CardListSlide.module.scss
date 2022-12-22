@@ -1,0 +1,126 @@
+
+.cardlistslide{
+    .maintitle{
+        font-size: 24px;
+        padding: 20px 0;
+        font-weight: bold;
+    }
+    ._wrapper{
+        overflow: hidden;
+    }
+    .ranking_wrapper{
+        width: 100%;
+        max-width: 1100px;
+        position: relative;
+        // top : 50%;
+        // left: 50%;
+        // transform: translateX(-50%);
+    }
+    .ranking{
+        display: flex;
+        list-style: none;
+        padding:0;
+        margin-top: 10px;  
+        transition: all .3s;
+        transform: translateX();
+    }
+    .ranking li{    
+        margin-right: 20px;
+        transition: all .3s;   
+    }
+    
+    .ranking_content_poster{ 
+        position: relative;   
+        border-radius: 10px;
+        width: 204px;
+        height: 300px;
+        overflow: hidden;
+    }
+    .ranking_content_poster .info{
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.788);
+        color: white;
+        padding: 25px;
+        transition: all 0.2s;
+        opacity: 0;
+    }
+    .info p{
+        padding-right: 40px;
+    }
+    .ranking_content_poster .info dl{
+        display: flex;
+        padding:  1px;
+        margin: 0;
+        color:white;
+    }
+    dt{
+        color: wheat;
+    }
+    dd{
+        margin-left: 7px;
+    }
+    .ranking_content_poster:hover .info{
+        opacity: 1;
+    }
+    .ranking-content:hover {
+        transform: translateY(-10px);
+    }
+    .ranking_content_poster img{    
+        width: 100%;    
+        height: 300px;
+    }
+    .ranking_content_poster .number{
+        position:absolute;
+        top:0px;
+        padding: 10px;    
+        color: white;
+        font-size: 30px;
+        font-style: italic;
+        font-family: 'SF-UI-Display-Thin', sans-serif;
+    }
+    
+    .ranking_content_poster .point{
+        position:absolute;
+        width: 100%;
+        bottom: 10px;
+        color: white;
+        font-size: 16px;
+        text-align: center;
+        padding: 3px 0px;
+    }
+    
+    .blurEffect {
+        -webkit-backdrop-filter: blur(1px);
+        backdrop-filter: blur(1px);
+        background-color: rgba(32, 32, 32, 0.061);
+    }
+    .ranking_content .title h4{
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 10px;
+        text-align: center;        
+    }
+    
+    .slide{
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 30px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;  
+        text-align: center;
+        line-height: 40px;
+    
+    }
+    .slide_left{
+        left: -20px;        
+    }
+    .slide_right{
+        right: -20px;    
+    }
+}

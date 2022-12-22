@@ -1,0 +1,25 @@
+.tbdiv{
+    max-width: 500px;
+    width: 500px;
+    input, textarea{
+        outline: none;
+        border: none;
+        width: 90%;
+    }
+    textarea{
+        height: 150px;
+    }
+}
+.imgdiv{
+    margin-top: 20px;
+    max-width: 500px;
+    width: 500px;
+    text-align: center;
+    img{    
+        margin-top: 20px;
+        width: 200px;
+    }
+}
+.btns{
+    margin-top: 10px;
+}

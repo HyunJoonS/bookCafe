@@ -1,0 +1,86 @@
+.wrap{
+    display: flex;
+    height: 93vh;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: var(--main-color-yello);
+}
+
+.btns{
+    background-color: var(--main-color-yello);
+    width: 50%;
+    height: 50%;
+    max-width: 600px;
+    min-width: 500px;
+    border: 1px;
+    position: relative;
+    transition: all 0.2s linear;
+    .centerText{
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+    h4{
+        font-size:1.5em;
+    }
+
+
+}
+.btns:hover{
+    // filter: brightness(0.9);
+    cursor: pointer;
+}
+.btns:hover h4{
+    animation-duration: 1s;
+    animation-name: shake;
+    animation-iteration-count: infinite;
+    font-size: 1.6em;
+}
+
+
+@keyframes shake {
+    0% {
+        transform: translate(1px, -2px) rotate(-1deg);
+      }
+      10% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+      }
+      20% {
+        transform: translate(1px, 2px) rotate(0deg);
+      }
+      30% {
+        transform: translate(3px, 2px) rotate(0deg);
+      }
+      40% {
+        transform: translate(1px, -1px) rotate(1deg);
+      }
+      50% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+      }
+      60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+      }
+      70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+      }
+      80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+      }
+      90% {
+        transform: translate(-3px, 0px) rotate(1deg);
+      }
+      100% {
+        transform: translate(1px, 1px) rotate(0deg);
+      }
+}
+
+.ad{
+    bottom: 0;
+    width: 100%;
+    height: 75px;
+    background-color: white;
+    
+}
