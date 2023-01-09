@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+/*
+ * API 에러 메세지 대응
+ */
 @Slf4j
 @RestControllerAdvice(annotations = RestController.class)
 public class ExControllerAdvice {

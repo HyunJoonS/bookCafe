@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/java/jpa/bookCafe/controller/TestDataController.java
+/src/main/resources/application-pord.yml
+/src/main/resources/keystore.p12
+/src/main/resources/static/static/css/main.547b472f.css
+/src/main/resources/static/static/css/main.547b472f.css.map
+/src/main/resources/static/static/js/main.98112f8e.js
+/src/main/resources/static/static/js/main.98112f8e.js.LICENSE.txt
+/src/main/resources/static/static/js/main.98112f8e.js.map

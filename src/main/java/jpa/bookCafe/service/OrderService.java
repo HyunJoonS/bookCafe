@@ -21,6 +21,8 @@ import java.util.List;
 public class OrderService {
 private final ItemRepository itemRepository;
 private final OrderRepository orderRepository;
+
+    //order 생성, 장바구니를 받아옴
     public Long 주문하기(List<CartDto> cartItems){
 
         List<OrderItem> orderItems =new ArrayList<>();
@@ -29,28 +31,27 @@ private final OrderRepository orderRepository;
         for (CartDto cartItem : cartItems) {
             Item item = itemRepository.findById(cartItem.getItemId()).get();
             OrderItem orderItem = OrderItem.createOrderItem(item, cartItem.getQuantity());
-//            orderItems.add();
             order.addOrderItem(orderItem);
         }
-
-
-//        Order order = Order.createOrder(orderItems);
 
         Order save = orderRepository.save(order);
         System.out.println("save.getId() = " + save.getId());
         System.out.println("order.getId() = " + order.getId());
         return order.getId();
     }
+
+    //단건 조회
     public Order 주문조회(Long orderId) {
         return orderRepository.findById(orderId).get();
     }
 
+    //dto로 조회
     public OrderDto findByIdDto(Long orderId) {
         Order order = orderRepository.findById(orderId).get();
         return OrderDto.createDto(order);
     }
 
-
+    //상태 '결재완료'건만 조회
     public List<OrderDto> 새로운주문조회( ) {
         List<Order> orders = orderRepository.findByAll();
 
@@ -61,6 +62,7 @@ private final OrderRepository orderRepository;
         return orderDtos;
     }
 
+    //상태 변경 결제대기 -> 결제완료 -> 조리중 -> 조리완료
     public Long statusUpdate(OrderDto orderDto){
         Order order = orderRepository.findById(orderDto.getOrderId()).get();
         order.setStatus(OrderStatus.valueOf(orderDto.getOrderStatus()));

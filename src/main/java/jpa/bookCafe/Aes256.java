@@ -15,6 +15,7 @@ public class Aes256 {
 
     private String key;
 
+    //string으로 된 key를 한번더 계산을 통해 꼬아줌 key가 유출되더라도 계산 알고리즘까지 알아야 쓸수있음.
     public Aes256() {
         String password = getKey();
         char[] array_pass = new char[password.length()];
@@ -39,6 +40,7 @@ public class Aes256 {
         return password;
     }
 
+    //복호화 하는 코드
     public String Decrypt(String text) throws Exception
     {
 
@@ -70,7 +72,7 @@ public class Aes256 {
     }
 
 
-
+    //암호화 하는 코드
     public String Encrypt(String text) throws Exception
 
     {

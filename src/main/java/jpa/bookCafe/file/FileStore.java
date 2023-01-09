@@ -13,13 +13,15 @@ public class FileStore {
     @Value("${file.dir}")
     String fileDir;
 
+    //파일 저장
     public String storeFile(MultipartFile file) throws IOException {
         String storeFilename = createStoreFilename(file.getOriginalFilename());
-        file.transferTo(new File(fileDir+storeFilename));
+        file.transferTo(new File(fileDir+storeFilename)); //경로+이름으로 저장
         return storeFilename;
                 
     }
 
+    //파일 저장을 위한 랜덤이름.확장자를 리턴하는 메서드
     private String createStoreFilename(String originalFilename) {
         String ext = extractExt(originalFilename);
         String uuid = UUID.randomUUID().toString();
@@ -27,6 +29,7 @@ public class FileStore {
         return storeFilename;
     }
 
+    //확장자를 뽑아내는 메서드
     private String extractExt(String originalFilename) {
         int pos = originalFilename.indexOf('.');
         String ext = originalFilename.substring(pos + 1);

@@ -25,6 +25,7 @@ public class BookController {
     private final BookService bookService;
     private final ItemRepository itemRepository;
 
+
     @GetMapping("/err/{id}")
     public String getMember(@PathVariable("id") String id) {
         if (id.equals("ex")) {
@@ -36,7 +37,15 @@ public class BookController {
         return id;
     }
 
+    /*
+      책을 등록할 때 사용될 메서드
+      네이버 검색 API를 통해 책 정보 요청
+      결과값 리턴
 
+     @query 책 이름
+     @display 한 번에 표시할 검색 결과 개수(기본값: 10, 최댓값: 100)
+     @start 검색 시작 위치(기본값: 1, 최댓값: 1000)
+     */
     @GetMapping("/bookSearch")
     public String BookSearch(@RequestParam("query") String query,
                              @RequestParam("display") String display,
@@ -44,6 +53,8 @@ public class BookController {
         log.info("요청 {},{},{}",query,display,start);
         String API_ID = "tJonrAzZb7_ojoWfWQBa";
         String API_KEY = "_dgE8mr70g";
+
+        //외부 API 사용을 위한 라이브러리
         WebClient webClient = WebClient
                 .builder()
                 .baseUrl("https://openapi.naver.com/v1/search/book.json")
@@ -67,16 +78,21 @@ public class BookController {
     }
 
 
+    //전체 책 목록
     @GetMapping("/bookList")
     public List<BookDto> BookList(){
         List<BookDto> allBookDtos = bookService.findAllBookDtos();
         return allBookDtos;
     }
+
+    //책장별 책 목록, 페이징
     @GetMapping("/book/list")
     public Page<BookDto> BookList(Pageable pageable,@RequestParam(value = "bookshelf",required = false)String bookshelf){
         Page<BookDto> page = bookService.findAllBookDtos(pageable, bookshelf);
         return page;
     }
+
+    //책 단건 조회
     @GetMapping("/api/book/detail/{id}")
     public BookDto BookDto(@PathVariable("id")Long id){
         log.info("id={}",id);
@@ -84,6 +100,8 @@ public class BookController {
         return dto;
     }
 
+
+    //책 검색하기 query is title or author
     @GetMapping("/api/book/search")
     public List<BookDto> dtoByQuery(@RequestParam("searchQuery")String query){
         log.info("query={}",query);
@@ -91,17 +109,22 @@ public class BookController {
         return dtoByQuery;
     }
 
+    //책 등록하기
     @PostMapping("/api/book")
     public Long BookAdd(@RequestBody BookDto bookDto) throws Exception {
         Long savedId = bookService.dtoSave(bookDto);
         return savedId;
     }
+
+    //책 삭제하기, 비밀번호 체크
     @DeleteMapping("/api/book")
     public String BookDelete(@RequestParam("id") Long id, @RequestParam("password") String pw) throws Exception {
         log.info("id={}, pw={}",id,pw);
         bookService.delete(id, pw);
         return "ok";
     }
+
+    //책 수정하기
     @PutMapping("/api/book")
     public Long bookUpdate(@RequestBody BookDto bookDto) throws Exception {
         log.info("bookDto={}",bookDto);

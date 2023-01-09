@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ApproveResponse {
+public class ApproveResponse { //카카오페이에서 결제요청시 데이터를 받아올 때 사용할 dto
     private String aid;
     private String tid;
     private String cid;

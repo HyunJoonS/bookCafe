@@ -26,6 +26,7 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
 
+    //카카오페이 결제 완료시 결제정보 생성
     public Long 결제생성(Long orderId, ApproveResponse approveResponse) {
 
         Order order = orderRepository.findById(orderId).get();
@@ -37,11 +38,14 @@ public class PaymentService {
         return savedPayment.getId();
     }
 
+    //전체 결제정보 조회
     public List<PaymentDto> 전체결제(){
         List<Payment> all = paymentRepository.findAll();
         List<PaymentDto> dtos = PaymentDto.createDtos(all);
         return dtos;
     }
+
+    //기간별 결제정보 조회
     public List<PaymentDto> 기간조회(Integer beforeDays){
         List<Payment> all;
         if(beforeDays!=null){
@@ -52,7 +56,6 @@ public class PaymentService {
             all = paymentRepository.findAll();
         }
         List<Payment> collect = all.stream().sorted(Comparator.comparing(Payment::getPaymentTime).reversed()).collect(Collectors.toList());
-
 
         return PaymentDto.createDtos(collect);
     }

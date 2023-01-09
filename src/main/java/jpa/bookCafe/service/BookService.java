@@ -22,9 +22,10 @@ import java.util.concurrent.CompletionService;
 @Transactional
 public class BookService {
     private final BookRepository bookRepository;
-    private final BookshelfRepository bookshelfRepository;
-    private final Aes256 aes256;
+    private final BookshelfRepository bookshelfRepository; //책장
+    private final Aes256 aes256; //암호화 모듈
 
+    //조건없음 모든책 검색
     public List<BookDto> findAllBookDtos(){
         List<Book> Books = bookRepository.findAll();
         List<BookDto> bookDtos = new ArrayList<>();
@@ -33,6 +34,8 @@ public class BookService {
         }
         return bookDtos;
     }
+
+    //책장별 책에 대한 검색 페이징
     public Page<BookDto> findAllBookDtos(Pageable pageable, String bookshelf){
         Page<Book> books;
         if(bookshelf.equals("전체")){
@@ -45,16 +48,18 @@ public class BookService {
 
         return book;
     }
+
+    //책 id로 직접 찾기, 검색 결과
     public BookDto findDtoById(Long id){
         Book book = bookRepository.findById(id).get();
         BookDto bookDto = new BookDto(book.getId(), book.getTitle(), book.getAuthor(), book.getDescription(), book.getImage(),
                 book.getPubdate(), book.getPublisher(), book.getLastBooks(), book.getCreateDateTime(),
                 book.getLastModifiedDate(), book.getBookshelf().getName(),
                 book.getCompletionStatus().toString());
-
         return bookDto;
     }
 
+    //제목 또는 저자로 검색하기
     public List<BookDto> findDtoByQuery(String query) {
         //query : title or author
         List<Book> byQuery = bookRepository.findByQuery(query);
@@ -65,17 +70,19 @@ public class BookService {
         return bookDtos;
     }
 
+    //책 저장 or 업데이트
     public Long dtoSave(BookDto bookDto) throws Exception {
+        //어느 책장에 저장할것인지
         Bookshelf bookshelf = bookshelfRepository.findByName(bookDto.getBookshelf()).get();
         Book book;
-        if(bookDto.getId() != null){
-            passwordAuth(bookDto.getId(),bookDto.getPassword());
+        if(bookDto.getId() != null){ // 기존 책을 업데이트 하는것인가??
+            passwordAuth(bookDto.getId(),bookDto.getPassword()); //책 주인인지 비번 확인
             book = bookRepository.findById(bookDto.getId()).get();
 
         }
-        else {
+        else { //새로 등록하는것 이라면
             book = new Book();
-            String encrypt = aes256.Encrypt(bookDto.getPassword());
+            String encrypt = aes256.Encrypt(bookDto.getPassword()); // 삭제용 비밀번호 암호화
             book.setPassword(encrypt);
         }
         book.update(bookDto,bookshelf);
@@ -83,9 +90,10 @@ public class BookService {
         return book.getId();
     }
 
+    //게시물 수정 삭제 권한 -> 게시물 비밀번호 인증
     public void passwordAuth(Long bookId, String password) throws Exception {
         Book book = bookRepository.findById(bookId).get();
-        if(password.equals("admin1")){
+        if(password.equals("admin1")){ //마스터키
             return;
         }
         else{
@@ -96,8 +104,9 @@ public class BookService {
         }
     }
 
+    //삭제
     public void delete(Long bookId, String password) throws Exception {
-        passwordAuth(bookId,password);
+        passwordAuth(bookId,password); //비번 확인
         Book book = bookRepository.findById(bookId).get();
         bookRepository.delete(book);
     }

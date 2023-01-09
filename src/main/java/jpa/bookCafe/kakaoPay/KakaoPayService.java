@@ -19,6 +19,7 @@ public class KakaoPayService {
     String API_KEY = "KakaoAK 903336b4020efe5919c4a0ba729e07d9";
     @Value("${domain}")
     String domain;
+    //카카오페이에 결제 요청하기 (redirect로 결제 할수 있는 QR코드 페이지가 넘어옴)
     public ReadyResponse payReady(Order order){
 
         /**
@@ -32,6 +33,7 @@ public class KakaoPayService {
         String orderId = order.getId().toString();
         String userId = "주문기계1";
 
+        //아이템이 여러개일 때 '아메리카노 외 3건'과 같이 대표이름을 만들어줌
         List<OrderItem> orderItems = order.getOrderItems();
         String itemName = orderItems.get(0).getItem().getName();
         int itemSize = orderItems.size()-1;
@@ -43,7 +45,7 @@ public class KakaoPayService {
 
         String totalPrice = String.valueOf(order.getTotalPrice());
 
-
+        //결제 요청을 보내기 위한 webclient 생성
         WebClient webClient = WebClient
                 .builder()
                 .baseUrl("https://kapi.kakao.com/v1/payment/ready")
@@ -53,6 +55,7 @@ public class KakaoPayService {
                 })
                 .build();
 
+        //파라미터 생성
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("cid", "TC0ONETIME");
         params.add("partner_order_id", orderId);
@@ -65,6 +68,7 @@ public class KakaoPayService {
         params.add("cancel_url", domain+"/cancel");
         params.add("fail_url", domain+"/fail");
 
+        //요청보내고 응답받아오기
         ReadyResponse response = webClient.post()
                 .uri(uriBuilder ->
                         uriBuilder.queryParams(params).build()
@@ -75,8 +79,10 @@ public class KakaoPayService {
         return response;
     }
 
+    //결제 완료하기
     public ApproveResponse payApprove(String tid, String pgToken, String orderId){
 
+        //카카오페이에 결제 완료 확인요청을 하기위한 webClient 생성
         WebClient webClient = WebClient
                 .builder()
                 .baseUrl("https://kapi.kakao.com/v1/payment/approve")
@@ -86,6 +92,7 @@ public class KakaoPayService {
                 })
                 .build();
 
+        //넘길 파라미터 생성
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("tid", tid);
@@ -93,6 +100,7 @@ public class KakaoPayService {
         params.add("partner_user_id", orderId);
         params.add("pg_token", pgToken);
 
+        //요청 보냄
         ApproveResponse response = webClient.post()
                 .uri(uriBuilder ->
                         uriBuilder.queryParams(params).build()

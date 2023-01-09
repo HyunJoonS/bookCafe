@@ -18,7 +18,8 @@ import java.util.List;
 public class ItemService {
     private final ItemRepository itemRepository;
     private final Aes256 aes256;
-    //매장내 메뉴
+
+    //전체 메뉴
     public List<Item> menuList(Long memberId){
         return itemRepository.findAllByItem(memberId);
     }
@@ -46,10 +47,12 @@ public class ItemService {
         return findItem.getId();
     }
 
+    //메뉴 단건 조회
     public Item findItem(Long ItemId){
         return itemRepository.findById(ItemId).get();
     }
 
+    //메뉴 삭제
     public void delete(Long itemId,String password) throws Exception {
         passwordAuth(itemId,password);
         Item item = itemRepository.findById(itemId).get();
@@ -57,6 +60,7 @@ public class ItemService {
     }
 
 
+    //삭제나 수정시 암호인증
     public void passwordAuth(Long itemId, String password) throws Exception {
         Item item = itemRepository.findById(itemId).get();
         if(password.equals("admin1")){
