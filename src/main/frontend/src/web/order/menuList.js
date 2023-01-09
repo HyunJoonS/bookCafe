@@ -106,7 +106,9 @@ function List(props) {
                 {arr.map((e) => {
                     return (
                         <li onClick={() => { props.onModal(e.id) }}>
-                            <img src={imgurl + e.photoPath} alt="menu"></img>
+                            <div className={styles.photo}>
+                                <img src={imgurl + e.photoPath} alt="menu"></img>
+                            </div>
                             <h5>{e.name}</h5>
                             <p>{e.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                         </li>

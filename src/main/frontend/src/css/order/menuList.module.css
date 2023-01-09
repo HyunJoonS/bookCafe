@@ -30,13 +30,16 @@ p{
     margin-right: 15px;
     transition: all 0.1s linear;
 }
-.wrap ul li img{
-    min-width: 150px;
-    min-height: 150px;
+.wrap ul li .photo{
     width: 150px;
     height: 150px;
-    object-fit: cover;
     border: 1px solid #eee;
+    overflow: hidden;
+}
+.wrap ul li .photo img{
+    width: 100%;
+    height: 100%;
+    object-fit:contain;
 }
 .wrap ul li:hover{
     cursor: pointer;
