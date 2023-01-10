@@ -1,11 +1,13 @@
 .wrap{
-    display: flex;
-    height: 93vh;
+    display: block;
+    height: 100%;
     width: 100%;
+    display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
     background-color: var(--main-color-yello);
+    
 }
 
 .btns{
