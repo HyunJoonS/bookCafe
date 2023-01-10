@@ -9,8 +9,12 @@ import PaymentList from './paymentList';
 
 import { useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 function AdminPage() {
+    const navigator= useNavigate();
     const number = useSelector((state)=> state.newOrder);
     let [menuNum,setMenuNum] = useState("주문현황");
     const dispatch = useDispatch();
@@ -29,7 +33,12 @@ function AdminPage() {
         dispatch({type:'init'});
         setMenuNum(menuName);
     }
-
+    const logout=()=>{
+        axios.get("api/logout").then(()=>{
+            alert("정상적으로 로그아웃 되었습니다.");
+            navigator("/");
+        })
+    }
     return (
         <div className={styles.wrap}>
             <div className={styles_nav.left_navbar}>
@@ -71,6 +80,7 @@ function AdminPage() {
                             메뉴추가
                         </li>
                     </ul>
+                    <div className={styles_nav.logout} onClick={logout}>로그아웃</div>
                 </div>
             </div>
             <div className={styles.main}>
