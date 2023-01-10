@@ -1,13 +1,16 @@
 package jpa.bookCafe.controller;
 
 import jpa.bookCafe.domain.Member;
+import jpa.bookCafe.dto.LoginDto;
 import jpa.bookCafe.dto.MemberDto;
 import jpa.bookCafe.service.MemberService;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.annotation.Validated;
@@ -47,44 +50,47 @@ public class MemberControllerApi {
     }
 
 
-    @PostMapping("/login")
-    public LoginResponse 로그인(@RequestBody @Validated LoginRequest loginRequest, HttpServletRequest request){
+    @PostMapping("api/login")
+    public LoginResponse 로그인(@RequestBody @Validated LoginDto loginRequest, HttpServletRequest request){
+
+        log.info("{},{}",loginRequest.getLoginId(),loginRequest.getLoginPw());
+
         Member loginMember = memberService.로그인(loginRequest.getLoginId(), loginRequest.getLoginPw());
         HttpSession session = request.getSession();
         session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
         return new LoginResponse(loginMember.getId());
     }
 
-    @PostMapping("/register")
+     @PostMapping("api/register")
     public CreateMemberResponse 회원가입(@RequestBody @Validated MemberDto memberDto){
         log.info("가입 {}", memberDto.getUserId());
         Long 회원가입 = memberService.회원가입(memberDto);
         return new CreateMemberResponse(회원가입);
     }
+    @GetMapping("api/admin")
+    public String 로그인여부(){
+        return "ok";
+    }
+    @GetMapping("api/logout")
+    public String 로그아웃(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "ok";
+    }
 
     @Data
-    private class CreateMemberResponse {
+    private static class CreateMemberResponse {
         private Long memberId;
-
         public CreateMemberResponse(Long memberId) {
             this.memberId = memberId;
         }
     }
 
     @Data
-    private class LoginResponse {
+    private static class LoginResponse {
         private Long memberId;
-
         public LoginResponse(Long memberId) {
             this.memberId = memberId;
         }
-    }
-
-    @Data
-    private class LoginRequest {
-        @NotBlank
-        private String loginId;
-        @NotBlank
-        private String loginPw;
     }
 }

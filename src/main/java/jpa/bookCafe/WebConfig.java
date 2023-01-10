@@ -15,15 +15,13 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-
-
-//    @Override
-//    public void addInterceptors(InterceptorRegistry registry) {
-//        registry.addInterceptor(new LoginInterceptor())
-//                .order(1)
-//                .addPathPatterns("/**")
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor())
+                .order(1)
+                .addPathPatterns("/adminpage","/api/admin");
 //                .excludePathPatterns("/login", "/register", "/error");
-//    }
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
