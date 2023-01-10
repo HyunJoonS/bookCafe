@@ -1,0 +1,63 @@
+.wrap{
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border: solid 1px #eee;
+    padding: 30px;
+    width: 300px;
+    box-shadow: 12px 12px 2px 1px rgba(10, 10, 10, 0.2);
+    h4{
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 30px;
+    }
+    .inputbox{
+        width: 100%;
+
+        label{
+            font-size: 0.8em;
+            color:#222;
+        }
+        input{
+            width: 100%;
+            padding: 0;
+            border-width: 0;
+            border-bottom: 1px solid #aaa;
+            outline: none;
+        }
+     
+        margin-bottom: 20px;
+
+    }
+    span{
+        display: block;
+        font-size: 0.3em;
+        color: red;
+        margin-top: 2px;
+        height: 14px;
+    }
+    .vibration{
+        animation: vibration 0.1s infinite;
+    }
+    .btn{
+        margin-top: 20px;
+        width: 100%;
+        height: 40px;
+        background-color: #fff;
+        border-width: 0;
+        border: 1px solid rgba(5, 2, 190, 0.432);
+        cursor: pointer;
+    }
+
+    @keyframes vibration {
+        from {
+          transform: rotate(1deg);
+        }
+        to {
+          transform: rotate(-1deg);
+        }
+      }
+}
