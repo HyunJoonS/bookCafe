@@ -33,8 +33,9 @@ public class MemberService {
             throw new IllegalArgumentException("중복된 회원이 존재합니다." + s.getUserId());
         });
         Member member = new Member(dto.getUserId(), dto.getPassword(), dto.getShopName(), dto.getShopMaster(), dto.getTel_number());
-        memberRepository.save(member);
-        return member.getId();
+        System.out.println(member.getUserId());
+        Member save = memberRepository.save(member);
+        return save.getId();
     }
 
     public Member findById(Long id){

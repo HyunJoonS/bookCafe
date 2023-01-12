@@ -56,7 +56,7 @@ public class MenuController {
     //전체 조회
     @GetMapping("/api/menu")
     public List<ItemDto> MenuList() {
-        List<ItemDto> itemDto = itemRepository.findItemDto();
+        List<ItemDto> itemDto = itemService.findAll_ItemDtos();
         log.info("{}", itemDto);
         return itemDto;
     }

@@ -25,7 +25,6 @@ private final OrderRepository orderRepository;
     //order 생성, 장바구니를 받아옴
     public Long 주문하기(List<CartDto> cartItems){
 
-        List<OrderItem> orderItems =new ArrayList<>();
         Order order = new Order();
         order.setStatus(OrderStatus.결제대기);
         for (CartDto cartItem : cartItems) {
@@ -51,7 +50,7 @@ private final OrderRepository orderRepository;
         return OrderDto.createDto(order);
     }
 
-    //상태 '결재완료'건만 조회
+    //결제건만 조회
     public List<OrderDto> 새로운주문조회( ) {
         List<Order> orders = orderRepository.findByAll();
 

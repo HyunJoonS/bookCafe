@@ -1,10 +1,8 @@
 package jpa.bookCafe.service;
 
 import jpa.bookCafe.Aes256;
-import jpa.bookCafe.domain.Book;
 import jpa.bookCafe.domain.Item;
 import jpa.bookCafe.dto.ItemDto;
-import jpa.bookCafe.repository.MemberRepository;
 import jpa.bookCafe.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,8 +18,9 @@ public class ItemService {
     private final Aes256 aes256;
 
     //전체 메뉴
-    public List<Item> menuList(Long memberId){
-        return itemRepository.findAllByItem(memberId);
+    public List<ItemDto> findAll_ItemDtos(){
+        List<ItemDto> itemDto = itemRepository.findItemDto();
+        return itemDto;
     }
 
     //메뉴 추가

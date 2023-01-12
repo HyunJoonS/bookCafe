@@ -3,7 +3,6 @@ package jpa.bookCafe.service;
 import jpa.bookCafe.Aes256;
 import jpa.bookCafe.domain.Book;
 import jpa.bookCafe.domain.Bookshelf;
-import jpa.bookCafe.domain.enumStatus.BookStatus;
 import jpa.bookCafe.dto.BookDto;
 import jpa.bookCafe.repository.BookRepository;
 import jpa.bookCafe.repository.BookshelfRepository;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletionService;
 
 @RequiredArgsConstructor
 @Service
@@ -60,7 +58,7 @@ public class BookService {
     }
 
     //제목 또는 저자로 검색하기
-    public List<BookDto> findDtoByQuery(String query) {
+    public List<BookDto> findDtosByQuery(String query) {
         //query : title or author
         List<Book> byQuery = bookRepository.findByQuery(query);
         List<BookDto> bookDtos = new ArrayList<>();
@@ -86,8 +84,8 @@ public class BookService {
             book.setPassword(encrypt);
         }
         book.update(bookDto,bookshelf);
-        bookRepository.save(book);
-        return book.getId();
+        Book save = bookRepository.save(book);
+        return save.getId();
     }
 
     //게시물 수정 삭제 권한 -> 게시물 비밀번호 인증

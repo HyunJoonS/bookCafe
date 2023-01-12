@@ -16,7 +16,7 @@ public class ChatSessionRepository {
     private static Map<String, ChatUser> user =  new HashMap<>();
     private static int num = 0;
     public void save(String sessionId,String writer){
-        String color = randomColor.lendColor();
+        String color = randomColor.rentalColor();
         user.put(sessionId, new ChatUser(writer,color));
     }
     public void delete(String sessionId){
@@ -28,7 +28,7 @@ public class ChatSessionRepository {
         return user.size();
     }
 
-    public ChatUser findName(String sessionId){
+    public ChatUser findById(String sessionId){
         return user.get(sessionId);
     }
 }

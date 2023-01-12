@@ -10,6 +10,7 @@ import java.util.*;
 public class RandomColorRepository {
     private static List<String> randomColor = new ArrayList<>();
 
+    //채팅 유저아이디에 사용될 색깔들
     public RandomColorRepository() {
         randomColor.add("#eeb7b4");
         randomColor.add("#AFC4E7");
@@ -38,12 +39,15 @@ public class RandomColorRepository {
         randomColor.add("#6c6c6c");
         randomColor.add("#5e333b");
     }
-    public String lendColor(){
+    //랜덤 컬러를 하나씩 꺼내준다. 유저는 각자 다른 컬러를 가진다.
+    public String rentalColor(){
         Collections.shuffle(randomColor);
         Optional<String> remove = Optional.ofNullable(randomColor.remove(0));
         log.info("have list left={}",randomColor.size());
         return remove.orElse("gray");
     }
+
+    //퇴장 유저는 컬러를 반납한다.
     public void returnColor(String color){
         randomColor.add(color);
         log.info("have list left={}",randomColor.size());

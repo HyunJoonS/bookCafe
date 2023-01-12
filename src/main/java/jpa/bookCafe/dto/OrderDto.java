@@ -22,10 +22,12 @@ public class OrderDto {
     public static OrderDto createDto(Order order) {
         OrderDto orderDto = new OrderDto();
         orderDto.setOrderId(order.getId());
-        orderDto.setTid(order.getPayment().getTid());
-        orderDto.setOrderTime(order.getPayment().getPaymentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         orderDto.setOrderStatus(order.getStatus().toString());
         orderDto.setOrderTotalPrice(order.getTotalPrice());
+         if(order.getPayment() != null){
+             orderDto.setOrderTime(order.getPayment().getPaymentTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+             orderDto.setTid(order.getPayment().getTid());
+         }
 
         List<OrderItem> orderItems = order.getOrderItems();
         for (OrderItem orderItem : orderItems) {

@@ -30,7 +30,7 @@ public class StompController {
 
         //어떤 유저인지 구분하기 위하여 세션id 사용. (본 프로젝트는 로그인기능이 없기때문에 클라이언트 별로 유저를 구분)
         String sessionId = headerAccessor.getSessionId();
-        ChatUser user = chatSessionRepository.findName(sessionId);
+        ChatUser user = chatSessionRepository.findById(sessionId);
 
         chatDto.setTime(LocalDateTime.now());
         chatDto.setColor(user.getColor()); //유저아이디에 적용될 색깔
@@ -47,7 +47,7 @@ public class StompController {
         String sessionId = headerAccessor.getSessionId();
         chatSessionRepository.save(sessionId, chatDto.getWriter()); //현재 접속중인 유저목록에 추가
         int size = chatSessionRepository.size();
-        ChatUser user = chatSessionRepository.findName(sessionId); //유저 생성
+        ChatUser user = chatSessionRepository.findById(sessionId); //유저 생성
 
         headerAccessor.getSessionAttributes().put("roomId",chatDto.getChatRoom()); //시스템 메세지를 보낼 방 가져오기
 
@@ -73,7 +73,7 @@ public class StompController {
         if(roomId != null){
             String sessionId = accessor.getSessionId();
 
-            ChatUser user = chatSessionRepository.findName(sessionId); //등록된 어떤 유저인지
+            ChatUser user = chatSessionRepository.findById(sessionId); //등록된 어떤 유저인지
             chatSessionRepository.delete(sessionId); //현재 접속중인 유저 목록에서 제거
             int size = chatSessionRepository.size();
 
