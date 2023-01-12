@@ -36,7 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 /src/main/java/jpa/bookCafe/controller/TestDataController.java
-/src/main/resources/application-pord.yml
+/src/main/resources/application-prod.yml
 /src/main/resources/keystore.p12
 /src/main/resources/static/static/css/main.547b472f.css
 /src/main/resources/static/static/css/main.547b472f.css.map
