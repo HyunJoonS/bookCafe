@@ -36,9 +36,8 @@ class MemberServiceTest {
     void 로그인_없는아이디() {
         when(memberRepository.findByUserId("hello")).thenReturn(Optional.empty());
 
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
-            memberService.로그인("hello", "spring");
-        });
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> memberService.로그인("hello", "spring"));
 
         assertThat(ex.getMessage()).isEqualTo("아이디가 존재하지 않습니다.");
     }
@@ -48,9 +47,8 @@ class MemberServiceTest {
         Member m = member("hello","spring");
         when(memberRepository.findByUserId("hello")).thenReturn(Optional.of(m));
 
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
-            memberService.로그인("hello", "fail_pw");
-        });
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> memberService.로그인("hello", "fail_pw"));
 
         assertThat(ex.getMessage()).isEqualTo("비밀번호가 일치하지 않습니다.");
     }
@@ -81,16 +79,15 @@ class MemberServiceTest {
         Member m = member("hello","spring");
         when(memberRepository.findByUserId("hello")).thenReturn(Optional.of(m));
 
-        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class, () -> {
-            memberService.회원가입(dto);
-        });
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                () -> memberService.회원가입(dto));
 
         Assertions.assertThat(true).isEqualTo(ex.getMessage().contains("중복된 회원이 존재합니다."));
     }
 
     @Test
     void findById() {
-        Member m = member("hello","spring");
+        Member m = member("hello1","spring1");
         when(memberRepository.findById(1L)).thenReturn(Optional.of(m));
 
         Member byId = memberService.findById(1L);
@@ -101,8 +98,8 @@ class MemberServiceTest {
     private Member member(String id, String pw) {
         Member member = new Member();
         member.setId(1L);
-        member.setPassword(id);
-        member.setUserId(pw);
+        member.setUserId(id);
+        member.setPassword(pw);
         return member;
     }
 }
