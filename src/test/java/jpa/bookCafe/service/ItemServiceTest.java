@@ -1,25 +1,20 @@
 package jpa.bookCafe.service;
 
 import jpa.bookCafe.Aes256;
-import jpa.bookCafe.domain.Book;
 import jpa.bookCafe.domain.Item;
 import jpa.bookCafe.dto.ItemDto;
 import jpa.bookCafe.repository.ItemRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
