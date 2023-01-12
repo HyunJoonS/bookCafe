@@ -2,6 +2,7 @@ package jpa.bookCafe.repository;
 
 import jpa.bookCafe.dto.ChatUser;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ class ChatSessionRepositoryTest {
     @Autowired
     ChatSessionRepository chatSessionRepository;
 
+    @DisplayName("유저 채팅방 입장")
     @Test
     public void save() throws Exception{
         //given
@@ -28,6 +30,7 @@ class ChatSessionRepositoryTest {
         Assertions.assertThat(chatSessionRepository.size()).isEqualTo(1);
     }
 
+    @DisplayName("유저 채팅방 퇴장")
     @Test
     public void delete() throws Exception{
         //given
@@ -43,6 +46,7 @@ class ChatSessionRepositoryTest {
         Assertions.assertThat(chatSessionRepository.size()).isEqualTo(0);
     }
 
+    @DisplayName("유저 정보")
     @Test
     public void findById() throws Exception{
         //given
