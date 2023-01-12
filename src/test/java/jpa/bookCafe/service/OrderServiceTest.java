@@ -1,324 +1,149 @@
 package jpa.bookCafe.service;
 
+import jpa.bookCafe.domain.Item;
 import jpa.bookCafe.domain.Order;
+import jpa.bookCafe.domain.Payment;
+import jpa.bookCafe.domain.enumStatus.Category;
 import jpa.bookCafe.domain.enumStatus.OrderStatus;
 import jpa.bookCafe.dto.CartDto;
 import jpa.bookCafe.dto.ItemDto;
 import jpa.bookCafe.dto.OrderDto;
-import jpa.bookCafe.dto.PaymentDto;
 import jpa.bookCafe.kakaoPay.ApproveResponse;
+import jpa.bookCafe.repository.ItemRepository;
 import jpa.bookCafe.repository.OrderRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
-import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@SpringBootTest
-@Transactional
-@Rollback(value = false)
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+@SpringBootTest(classes ={OrderService.class})
 class OrderServiceTest {
-    @Autowired
-    OrderService orderService;
-    @Autowired
-    OrderRepository orderRepository;
-    @Autowired
-    PaymentService paymentService;
-    @Autowired
-    ItemService itemService;
-    @Autowired
-    EntityManager em;
-
+    @MockBean ItemRepository itemRepository;
+    @MockBean OrderRepository orderRepository;
+    @Autowired OrderService orderService;
 
     @Test
-    public void 주문테스트() throws Exception {
-        //Test데이터 셋팅
-        ItemDto product1 = new ItemDto("아메리카노", 3000, null, 10);
-        ItemDto product2 = new ItemDto("카페라떼", 3500, null, 10);
-        ItemDto product3 = new ItemDto("떡볶이", 4000, null, 10);
-        ItemDto product4 = new ItemDto("라면", 3500, null, 10);
-        Long item1 = itemService.add_item(product1);
-        Long item2 = itemService.add_item(product2);
-        Long item3 = itemService.add_item(product3);
-        Long item4 = itemService.add_item(product4);
+    void 주문하기() {
 
-        em.flush();
-        em.clear();
-
-        //카트 생성
-        List<CartDto> cartDtos = new ArrayList<>();
-        cartDtos.add(new CartDto(item1, 3));
-        cartDtos.add(new CartDto(item2, 2));
-        cartDtos.add(new CartDto(item3, 1));
-
-        //주문하기
-        Long orderId = orderService.주문하기(cartDtos);
-
-        em.flush();
-        em.clear();
-
-        //주문조회
-        Order 주문조회 = orderRepository.findById(orderId).get();
-        System.out.println("주문조회.getId() = " + 주문조회.getId());
-
-        Assertions.assertThat(주문조회.getOrderItems().size()).isEqualTo(3);
-        Assertions.assertThat(주문조회.getStatus()).isEqualTo(OrderStatus.결제대기);
-
-    }
-
-    @Test
-    public void 주문조회() throws Exception {
-        //Test데이터 셋팅
-        ItemDto product1 = new ItemDto("아메리카노", 3000, null, 10);
-        ItemDto product2 = new ItemDto("카페라떼", 3500, null, 10);
-        ItemDto product3 = new ItemDto("떡볶이", 4000, null, 10);
-        ItemDto product4 = new ItemDto("라면", 3500, null, 10);
-        Long item1 = itemService.add_item(product1);
-        Long item2 = itemService.add_item(product2);
-        Long item3 = itemService.add_item(product3);
-        Long item4 = itemService.add_item(product4);
-
-        em.flush();
-        em.clear();
-
-        //카트 생성
-        List<CartDto> cartDtos = new ArrayList<>();
-        cartDtos.add(new CartDto(item1, 3));
-        cartDtos.add(new CartDto(item2, 2));
-        cartDtos.add(new CartDto(item3, 1));
-
-        List<CartDto> cartDtos2 = new ArrayList<>();
-        cartDtos2.add(new CartDto(item1, 1));
-        cartDtos2.add(new CartDto(item3, 1));
-        cartDtos2.add(new CartDto(item4, 1));
-
-        List<CartDto> cartDtos3 = new ArrayList<>();
-        cartDtos3.add(new CartDto(item2, 2));
-        cartDtos3.add(new CartDto(item3, 2));
-        cartDtos3.add(new CartDto(item4, 1));
-
-        //주문하기
-        Long orderId1 = orderService.주문하기(cartDtos);
-        Long orderId2 = orderService.주문하기(cartDtos2);
-        Long orderId3 = orderService.주문하기(cartDtos3);
-        Long orderId4 = orderService.주문하기(cartDtos3); // 결제가 없기때문에
-        Long orderId5 = orderService.주문하기(cartDtos3); // 검색되지 않아야함
-
-
-
-        ApproveResponse approveResponse = new ApproveResponse();
-        approveResponse.setCreated_at(LocalDateTime.now().toString());
-        approveResponse.setApproved_at(LocalDateTime.now().toString());
-        approveResponse.setTid("123123123312");
-
-        paymentService.결제생성(orderId1, approveResponse);
-        paymentService.결제생성(orderId2, approveResponse);
-        paymentService.결제생성(orderId3, approveResponse);
-
-        em.flush();
-        em.clear();
-
-        List<OrderDto> 결제완료주문목록 = orderService.새로운주문조회();
-        for (OrderDto order : 결제완료주문목록) {
-            System.out.println("order = " + order.getOrderId());
-        }
-
-        Assertions.assertThat(결제완료주문목록.size()).isEqualTo(3);
-    }
-
-    @Test
-    public void 결제조회() throws Exception {
-        //Test데이터 셋팅
-        ItemDto product1 = new ItemDto("아메리카노", 3000, null, 10);
-        ItemDto product2 = new ItemDto("카페라떼", 3500, null, 10);
-        ItemDto product3 = new ItemDto("떡볶이", 4000, null, 10);
-        ItemDto product4 = new ItemDto("라면", 3500, null, 10);
-        Long item1 = itemService.add_item(product1);
-        Long item2 = itemService.add_item(product2);
-        Long item3 = itemService.add_item(product3);
-        Long item4 = itemService.add_item(product4);
-
-        em.flush();
-        em.clear();
-
-        //카트 생성
-        List<CartDto> cartDtos = new ArrayList<>();
-        cartDtos.add(new CartDto(item1, 3));
-        cartDtos.add(new CartDto(item2, 2));
-        cartDtos.add(new CartDto(item3, 1));
-
-        List<CartDto> cartDtos2 = new ArrayList<>();
-        cartDtos2.add(new CartDto(item1, 1));
-        cartDtos2.add(new CartDto(item3, 1));
-        cartDtos2.add(new CartDto(item4, 1));
-
-        List<CartDto> cartDtos3 = new ArrayList<>();
-        cartDtos3.add(new CartDto(item2, 2));
-        cartDtos3.add(new CartDto(item3, 2));
-        cartDtos3.add(new CartDto(item4, 1));
-
-        //주문하기
-        Long orderId1 = orderService.주문하기(cartDtos);
-        Long orderId2 = orderService.주문하기(cartDtos2);
-        Long orderId3 = orderService.주문하기(cartDtos3);
-        Long orderId4 = orderService.주문하기(cartDtos3);
-        Long orderId5 = orderService.주문하기(cartDtos3);
-
-
-        String 하루전 = LocalDateTime.now().minusDays(1).toString();
-        String 이틀전 = LocalDateTime.now().minusDays(2).toString();
-        String 일주일전 = LocalDateTime.now().minusDays(7).toString();
-        String 한달전 = LocalDateTime.now().minusDays(31).toString();
-
-        ApproveResponse approveResponse = new ApproveResponse();
-        approveResponse.setCreated_at(하루전);
-        approveResponse.setApproved_at(하루전);
-        approveResponse.setTid("123123123312");
-        approveResponse.setItem_name("기부");
-
-        ApproveResponse approveResponse2 = new ApproveResponse();
-        approveResponse2.setCreated_at(이틀전);
-        approveResponse2.setApproved_at(이틀전);
-        approveResponse2.setTid("123123123312");
-        approveResponse2.setItem_name("피자 외 1건");
-
-        ApproveResponse approveResponse3 = new ApproveResponse();
-        approveResponse3.setCreated_at(일주일전);
-        approveResponse3.setApproved_at(일주일전);
-        approveResponse3.setTid("123123123312");
-        approveResponse3.setItem_name("치킨");
-
-        ApproveResponse approveResponse4 = new ApproveResponse();
-        approveResponse4.setCreated_at(하루전);
-        approveResponse4.setApproved_at(하루전);
-        approveResponse4.setTid("123123123312");
-        approveResponse4.setItem_name("곰탕 외 2건");
-
-        ApproveResponse approveResponse5 = new ApproveResponse();
-        approveResponse5.setCreated_at(한달전);
-        approveResponse5.setApproved_at(한달전);
-        approveResponse5.setTid("123123123312");
-        approveResponse5.setItem_name("아메리카노 외 13건");
-
-        paymentService.결제생성(orderId1, approveResponse);
-        paymentService.결제생성(orderId2, approveResponse2);
-        paymentService.결제생성(orderId3, approveResponse3);
-        paymentService.결제생성(orderId4, approveResponse4);
-        paymentService.결제생성(orderId5, approveResponse5);
-
-        em.flush();
-        em.clear();
-
-        List<PaymentDto> 전체결제정보 = paymentService.전체결제();
-        for (PaymentDto dto : 전체결제정보) {
-            System.out.println("dto = " + dto);
-        }
-    }
-
-    @Test
-    public void 기간조회() throws Exception {
-        //Test데이터 셋팅
-        ItemDto product1 = new ItemDto("아메리카노", 3000, null, 10);
-        ItemDto product2 = new ItemDto("카페라떼", 3500, null, 10);
-        ItemDto product3 = new ItemDto("떡볶이", 4000, null, 10);
-        ItemDto product4 = new ItemDto("라면", 3500, null, 10);
-        Long item1 = itemService.add_item(product1);
-        Long item2 = itemService.add_item(product2);
-        Long item3 = itemService.add_item(product3);
-        Long item4 = itemService.add_item(product4);
-
-        em.flush();
-        em.clear();
-
-        //카트 생성
-        List<CartDto> cartDtos = new ArrayList<>();
-        cartDtos.add(new CartDto(item1, 3));
-        cartDtos.add(new CartDto(item2, 2));
-        cartDtos.add(new CartDto(item3, 1));
-
-        List<CartDto> cartDtos2 = new ArrayList<>();
-        cartDtos2.add(new CartDto(item1, 1));
-        cartDtos2.add(new CartDto(item3, 1));
-        cartDtos2.add(new CartDto(item4, 1));
-
-        List<CartDto> cartDtos3 = new ArrayList<>();
-        cartDtos3.add(new CartDto(item2, 2));
-        cartDtos3.add(new CartDto(item3, 2));
-        cartDtos3.add(new CartDto(item4, 1));
-
-        //주문하기
-        Long orderId1 = orderService.주문하기(cartDtos);
-        Long orderId2 = orderService.주문하기(cartDtos2);
-        Long orderId3 = orderService.주문하기(cartDtos3);
-        Long orderId4 = orderService.주문하기(cartDtos3);
-        Long orderId5 = orderService.주문하기(cartDtos3);
-
-        String 오늘 = LocalDateTime.now().toString();
-        String 하루전 = LocalDateTime.now().minusDays(1).toString();
-        String 이틀전 = LocalDateTime.now().minusDays(2).toString();
-        String 일주일전 = LocalDateTime.now().minusDays(7).toString();
-        String 한달전 = LocalDateTime.now().minusDays(31).toString();
-
-        ApproveResponse approveResponse = new ApproveResponse();
-        approveResponse.setCreated_at(오늘);
-        approveResponse.setApproved_at(오늘);
-        approveResponse.setTid("123123123312");
-        approveResponse.setItem_name("기부");
-
-        ApproveResponse approveResponse2 = new ApproveResponse();
-        approveResponse2.setCreated_at(이틀전);
-        approveResponse2.setApproved_at(이틀전);
-        approveResponse2.setTid("123123123312");
-        approveResponse2.setItem_name("피자 외 1건");
-
-        ApproveResponse approveResponse3 = new ApproveResponse();
-        approveResponse3.setCreated_at(일주일전);
-        approveResponse3.setApproved_at(일주일전);
-        approveResponse3.setTid("123123123312");
-        approveResponse3.setItem_name("치킨");
-
-        ApproveResponse approveResponse4 = new ApproveResponse();
-        approveResponse4.setCreated_at(하루전);
-        approveResponse4.setApproved_at(하루전);
-        approveResponse4.setTid("123123123312");
-        approveResponse4.setItem_name("곰탕 외 2건");
-
-        ApproveResponse approveResponse5 = new ApproveResponse();
-        approveResponse5.setCreated_at(한달전);
-        approveResponse5.setApproved_at(한달전);
-        approveResponse5.setTid("123123123312");
-        approveResponse5.setItem_name("아메리카노 외 13건");
-
-        paymentService.결제생성(orderId1, approveResponse);
-        paymentService.결제생성(orderId2, approveResponse2);
-        paymentService.결제생성(orderId3, approveResponse3);
-        paymentService.결제생성(orderId4, approveResponse4);
-        paymentService.결제생성(orderId5, approveResponse5);
-
-        em.flush();
-        em.clear();
-
-        List<PaymentDto> 조회dto = paymentService.기간조회(1);
-        for (PaymentDto dto : 조회dto) {
-            System.out.println("dto = " + dto);
-        }
-        Assertions.assertThat(조회dto.size()).isEqualTo(4);
-    }
-
-    @Test
-    public void OrderServiceTest() throws Exception{
         //given
+        when(itemRepository.findById(any(Long.class))).thenAnswer((Answer<Optional>) i->{
+            Long id = i.getArgument(0);
+            return Optional.ofNullable(item(id));
+        });
+        when(orderRepository.save(any(Order.class))).thenAnswer((Answer<Order>) i->{
+            Order order = i.getArgument(0);
+            order.setId(2L);
+            return order;
+        });
+        List<CartDto> cartDtos = 장바구니();
 
         //when
+        Long orderId = orderService.주문하기(cartDtos);
 
         //then
+        assertThat(orderId).isEqualTo(2L);
+    }
+
+    @DisplayName("id를 조회하면 Dto로 반환이 된다")
+    @Test
+    void findByIdDto() {
+        //given
+        Order order= new Order();
+        order.setId(1L);
+        order.setStatus(OrderStatus.결제대기);
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        //when
+        OrderDto dto = orderService.findByIdDto(1L);
+
+        //then
+        assertThat(dto.getOrderId()).isEqualTo(1L);
+        assertThat(dto.getOrderStatus()).isEqualTo(OrderStatus.결제대기.toString());
+    }
+
+    @DisplayName("전체 조회 Payment 테이블 Join.")
+    @Test
+    void 새로운주문조회() {
+        //given
+        ArrayList<Order> orders = new ArrayList<>();
+        orders.add(createOrder(1L, OrderStatus.결제완료));
+        orders.add(createOrder(2L, OrderStatus.결제완료));
+        orders.add(createOrder(3L, OrderStatus.결제완료));
+        when(orderRepository.findByAll()).thenReturn(orders);
+
+        //when
+        List<OrderDto> dtos = orderService.새로운주문조회();
+
+        //then
+        assertThat(dtos.size()).isEqualTo(3);
+
+    }
+    @Test
+    void statusUpdate() {
+        //given
+        Order order = createOrder(1L, OrderStatus.결제대기);
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrderId(1L);
+        orderDto.setOrderStatus("결제완료");
+        when(orderRepository.findById(1L)).thenReturn(Optional.of(order));
+
+        //when
+        Long id = orderService.statusUpdate(orderDto);
+
+        //then
+        assertThat(id).isEqualTo(1L);
+        assertThat(order.getStatus()).isEqualTo(OrderStatus.결제완료); //상태 업데이트 확인
+    }
+
+    //주문생성
+    private Order createOrder(Long l, OrderStatus status) {
+        Order order = new Order();
+        order.setId(l);
+        order.setStatus(status);
+        Payment.createPayment(order, approveResponse());
+        return order;
+    }
+
+
+    //카트 생성
+    List<CartDto> 장바구니(){
+        List<CartDto> cartDtos = new ArrayList<>();
+        cartDtos.add(new CartDto(1L, 3));
+        cartDtos.add(new CartDto(2L, 2));
+        cartDtos.add(new CartDto(3L, 1));
+
+        return cartDtos;
+    }
+
+    //아이템생성
+    Item item(long i){
+        Item item = new Item("메뉴"+i, 3000, null, 10, Category.DRINK);
+        item.setId(i);
+        return item;
+    }
+
+    //결제정보
+    ApproveResponse approveResponse(){
+        ApproveResponse approveResponse = new ApproveResponse();
+        approveResponse.setApproved_at(LocalDateTime.now().toString());
+        approveResponse.setCreated_at(LocalDateTime.now().toString());
+        approveResponse.setItem_name("itemName");
+        approveResponse.setTid("tid");
+        return approveResponse;
     }
 }
