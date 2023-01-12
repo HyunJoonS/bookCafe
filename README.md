@@ -32,8 +32,9 @@
   </tr>
 </table>
 
-[view](https://www.hyunjoon.co.kr/)
-
+[view](https://www.hyunjoon.co.kr/)   
+id: admin   
+pw: 1234
 
 <br/>
 
