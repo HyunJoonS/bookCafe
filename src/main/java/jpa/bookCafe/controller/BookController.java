@@ -105,7 +105,7 @@ public class BookController {
     @GetMapping("/api/book/search")
     public List<BookDto> dtoByQuery(@RequestParam("searchQuery")String query){
         log.info("query={}",query);
-        List<BookDto> dtoByQuery = bookService.findDtoByQuery(query);
+        List<BookDto> dtoByQuery = bookService.findDtosByQuery(query);
         return dtoByQuery;
     }
 
