@@ -18,13 +18,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -43,7 +40,9 @@ class BookServiceTest {
     @Test
     void findAllBookDtos() throws Exception {
         //given
-        when(bookRepository.findAll()).thenReturn(bookList());
+        List<Book> books = bookList();
+        when(bookRepository.findAll()).thenReturn(books);
+
         //when
         List<BookDto> allBookDtos = bookService.findAllBookDtos();
 
@@ -57,7 +56,8 @@ class BookServiceTest {
     void findDtoById() throws Exception {
         //given
         long id = 1L;
-        when(bookRepository.findById(id)).thenReturn(Optional.of(book(id)));
+        Optional<Book> book = Optional.of(book(id));
+        when(bookRepository.findById(id)).thenReturn(book);
 
         //when
         BookDto findBook = bookService.findDtoById(id);
@@ -70,7 +70,8 @@ class BookServiceTest {
     @Test
     void findDtoByQuery() throws Exception {
         //given
-        when(bookRepository.findByQuery("나루토")).thenReturn(bookList());
+        List<Book> books = bookList();
+        when(bookRepository.findByQuery("나루토")).thenReturn(books);
 
         //when
         List<BookDto> bookDtos = bookService.findDtosByQuery("나루토");
@@ -157,7 +158,7 @@ class BookServiceTest {
     }
 
 
-    private List<Book> bookList() throws Exception {
+    List<Book> bookList() throws Exception {
         List<Book> list = new ArrayList<>();
         for(int i=0; i<10; i++){
             Book book = book((long) i);
@@ -165,7 +166,8 @@ class BookServiceTest {
         }
         return list;
     }
-    private Book book(Long i) throws Exception {
+
+    Book book(Long i) throws Exception {
         Bookshelf 가 = new Bookshelf("가");
         Book book = new Book("나루토"+i, "키시모토 마사시"+i, "『나루토』 여기는 나뭇잎 마을. 닌자 학교의 문제아 나루토는 오늘도 장난질에 열중이다!! 그런 나루토의 꿈은 역대의 용사. 호카게의 이름을 물려 받아 그 누구보다 뛰어난 닌자가 되는 것. 하지만 나루토에겐 출생의 비밀이?!",
                 "https://shopping-phinf.pstatic.net/main_3248605/32486053939.20221019105128.jpg",
